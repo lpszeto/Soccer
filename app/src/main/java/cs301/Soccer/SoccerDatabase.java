@@ -52,7 +52,7 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public SoccerPlayer getPlayer(String firstName, String lastName) {
-        return null;
+        return playerHashMap.get(firstName + "#" +lastName);
     }
 
     /**
