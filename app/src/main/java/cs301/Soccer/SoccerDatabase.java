@@ -15,6 +15,7 @@ import java.util.*;
  *
  */
 public class SoccerDatabase implements SoccerDB {
+    private HashMap<String, SoccerPlayer> playerHashMap = new HashMap<>();
 
     /**
      * add a player
@@ -24,7 +25,14 @@ public class SoccerDatabase implements SoccerDB {
     @Override
     public boolean addPlayer(String firstName, String lastName,
                              int uniformNumber, String teamName) {
-        return false;
+        /*if(playerHashMap.isEmpty()){
+            playerHashMap.put(firstName + "#" +lastName,new SoccerPlayer(firstName,lastName,uniformNumber,teamName));
+            return true;
+        }*/
+        if(playerHashMap.containsKey(firstName + "#" +lastName)){return false;}
+        playerHashMap.put(firstName + "#" +lastName,new SoccerPlayer(firstName,lastName,uniformNumber,teamName));
+        return true;
+
     }
 
     /**
