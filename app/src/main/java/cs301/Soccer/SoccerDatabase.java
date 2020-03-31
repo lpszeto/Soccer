@@ -42,6 +42,11 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public boolean removePlayer(String firstName, String lastName) {
+        if(playerHashMap.containsKey(firstName + "#" +lastName)){
+            playerHashMap.remove(firstName + "#" +lastName);
+            return true;
+        }
+
         return false;
     }
 
@@ -52,7 +57,10 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public SoccerPlayer getPlayer(String firstName, String lastName) {
-        return playerHashMap.get(firstName + "#" +lastName);
+        if(playerHashMap.containsKey(firstName + "#" +lastName)){
+            return playerHashMap.get(firstName + "#" +lastName);
+        }
+        return null;
     }
 
     /**
@@ -62,6 +70,11 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public boolean bumpGoals(String firstName, String lastName) {
+        if(playerHashMap.containsKey(firstName + "#" +lastName)){
+            SoccerPlayer soccerPlayer = playerHashMap.get(firstName + "#" +lastName);
+            soccerPlayer.bumpGoals();
+            return true;
+        }
         return false;
     }
 
@@ -72,6 +85,11 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public boolean bumpAssists(String firstName, String lastName) {
+        if(playerHashMap.containsKey(firstName + "#" +lastName)){
+            SoccerPlayer soccerPlayer = playerHashMap.get(firstName + "#" +lastName);
+            soccerPlayer.bumpAssists();
+            return true;
+        }
         return false;
     }
 
@@ -82,6 +100,11 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public boolean bumpShots(String firstName, String lastName) {
+        if(playerHashMap.containsKey(firstName + "#" +lastName)){
+            SoccerPlayer soccerPlayer = playerHashMap.get(firstName + "#" +lastName);
+            soccerPlayer.bumpShots();
+            return true;
+        }
         return false;
     }
 
@@ -92,6 +115,11 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public boolean bumpSaves(String firstName, String lastName) {
+        if(playerHashMap.containsKey(firstName + "#" +lastName)){
+            SoccerPlayer soccerPlayer = playerHashMap.get(firstName + "#" +lastName);
+            soccerPlayer.bumpSaves();
+            return true;
+        }
         return false;
     }
 
@@ -102,6 +130,11 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public boolean bumpFouls(String firstName, String lastName) {
+        if(playerHashMap.containsKey(firstName + "#" +lastName)){
+            SoccerPlayer soccerPlayer = playerHashMap.get(firstName + "#" +lastName);
+            soccerPlayer.bumpFouls();
+            return true;
+        }
         return false;
     }
 
@@ -112,6 +145,11 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public boolean bumpYellowCards(String firstName, String lastName) {
+        if(playerHashMap.containsKey(firstName + "#" +lastName)){
+            SoccerPlayer soccerPlayer = playerHashMap.get(firstName + "#" +lastName);
+            soccerPlayer.bumpYellowCards();
+            return true;
+        }
         return false;
     }
 
@@ -122,6 +160,11 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public boolean bumpRedCards(String firstName, String lastName) {
+        if(playerHashMap.containsKey(firstName + "#" +lastName)){
+            SoccerPlayer soccerPlayer = playerHashMap.get(firstName + "#" +lastName);
+            soccerPlayer.bumpRedCards();
+            return true;
+        }
         return false;
     }
 
@@ -133,7 +176,23 @@ public class SoccerDatabase implements SoccerDB {
     @Override
     // report number of players on a given team (or all players, if null)
     public int numPlayers(String teamName) {
-        return -1;
+        Iterator playerIterator = playerHashMap.entrySet().iterator();
+        int numPlayer = 0;
+        String team = "";
+        while (playerIterator.hasNext()) {
+            Map.Entry mapElement = (Map.Entry)playerIterator.next();
+            SoccerPlayer sP = (SoccerPlayer) mapElement.getValue();
+            if(teamName == null){
+                if(sP.getTeamName() != null && sP.getTeamName().compareTo(team) !=0){
+                    team = sP.getTeamName();
+                    numPlayer++;
+                }
+            }
+            else if(teamName.compareTo(sP.getTeamName())== 0){
+                numPlayer++;
+            }
+        }
+        return numPlayer;
     }
 
     /**
