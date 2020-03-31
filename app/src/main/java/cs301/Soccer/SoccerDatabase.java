@@ -203,7 +203,22 @@ public class SoccerDatabase implements SoccerDB {
     // get the nTH player
     @Override
     public SoccerPlayer playerNum(int idx, String teamName) {
-        return null;
+        Iterator playerIterator = playerHashMap.entrySet().iterator();
+        ArrayList<SoccerPlayer> soccerPlayers = new ArrayList<>();
+        String team = "";
+        while (playerIterator.hasNext()) {
+            Map.Entry mapElement = (Map.Entry)playerIterator.next();
+            SoccerPlayer sP = (SoccerPlayer) mapElement.getValue();
+            if(teamName == null){
+                soccerPlayers.add(sP);
+            }
+            else if(teamName.compareTo(sP.getTeamName())== 0){
+                soccerPlayers.add(sP);
+            }
+        }
+
+        return (soccerPlayers.get(idx) == null) ? null : soccerPlayers.get(idx);
+
     }
 
     /**
